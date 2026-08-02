@@ -25,6 +25,6 @@ jobs:
                username: ${{secrets.DOCKER_USERNAME}}
                password: ${{secrets.DOCKER_PASSWORD}}
             - name: build image
-              run: docker build -t yourusername/ci:latest . 
+              run: docker build -t miracleinvoker/ci:latest . 
             - name: push image
-              run: docker push yourusername/ci:latest 
+              run: docker push miracleinvoker/ci:latest 
