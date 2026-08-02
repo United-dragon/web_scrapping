@@ -1,0 +1,30 @@
+name: ci pipeline
+
+on:
+ push:
+  branches: [main]
+jobs:
+    build: #job name
+        runs-on: "ubuntu-latest"
+        steps: # main work start
+            - name: Checkout code # moves code to the machine
+              uses: actions/checkout@v3
+            - name: Setup node # installs node js
+              uses: actions/setup-node@v3
+              with:
+                node-version: 20
+            - name: Install dependencies #install dependencies
+              run: npm ci
+            - name: Run tests #test cses
+              run: npm test #test cases  pass | test cases fail
+            - name: Build
+              run: echo "Build step"
+            - name: docker login
+              uses: docker/login@v2 #use ready made script for login
+              with:
+               username: ${{secrets.DOCKER_USERNAME}}
+               password: ${{secrets.DOCKER_PASSWORD}}
+            - name: build image
+              run: docker build -t yourusername/ci:latest . 
+            - name: push image
+              run: docker push yourusername/ci:latest 
